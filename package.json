@@ -2,9 +2,38 @@
   "name": "fundtran",
   "module": "index.ts",
   "type": "module",
+  "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "start": "bun run server.ts",
+    "dev": "bun --watch server.ts",
+    "test": "bun test",
+    "migrate": "bunx knex migrate:latest",
+    "rollback": "bunx knex migrate:rollback",
+    "seed": "bunx knex seed:run"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/helmet": "^4.0.0",
+    "@types/joi": "^17.2.3",
+    "@types/morgan": "^1.9.9",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "joi": "^17.12.2",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^2.5.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.9.7",
+    "uuid": "^11.1.0"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bcrypt": "^5.0.2",
+    "@types/bun": "latest",
+    "@types/jsonwebtoken": "^9.0.10"
   },
   "peerDependencies": {
     "typescript": "^5"
