@@ -1,5 +1,6 @@
 type RavenAmount = number | `${number}`;
 type RavenAccountNumber = string;
+type RavenCurrency = string;
 
 export interface CreateRavenAccount {
 	first_name: string;
@@ -38,7 +39,7 @@ export interface RavenTransferDto {
 	account_name: string;
 	narration: string;
 	reference: string;
-	currency?: string;
+	currency?: RavenCurrency;
 }
 
 interface RavenTransfer {
@@ -57,11 +58,40 @@ interface RavenTransfer {
 
 export interface RavenTransferStatus extends RavenTransfer {
 	account_bank: string;
-	currency: string;
+	currency: RavenCurrency;
 	session_id: string;
 }
 
 export interface RavenTransferPayload extends RavenTransfer {
 	bank_code: string;
 	created_at: string;
+}
+
+export interface RavenTransaction {
+	id: string;
+	email: string;
+	type: string;
+	currency: RavenCurrency;
+	reference: string;
+	b_before: number;
+	b_after: number;
+	direction: string;
+	_value: number;
+	_fee: RavenAmount;
+	meta_data: string;
+	created_at: string;
+	updated_at: string;
+	deleted_at: string;
+}
+
+export interface RavenTransactionList {
+	transactions: RavenTransaction[];
+	pagination: {
+		perPage: number;
+		currentPage: number;
+		nextPage: string;
+		prevPage: string;
+		totalPages: number;
+		total: number;
+	};
 }

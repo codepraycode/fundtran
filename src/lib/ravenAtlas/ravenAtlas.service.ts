@@ -4,6 +4,7 @@ import type {
 	CreateRavenAccount,
 	RavenAccount,
 	RavenResponse,
+	RavenTransactionList,
 	RavenTransferDto,
 	RavenTransferPayload,
 	RavenTransferStatus,
@@ -37,6 +38,12 @@ export default class RavenAtlasService {
 		return client.get<RavenResponse<RavenTransferStatus>>(endpoint);
 	}
 
+	// Transactions
+	public static async getTransactions(): Promise<RavenResponse<RavenTransactionList>> {
+		const endpoint = `/accounts/transactions`;
+		const client = getRavenAtlasClient();
+		return client.get<RavenResponse<RavenTransactionList>>(endpoint);
+	}
 
 	// Account
 	public static async createAccount(
