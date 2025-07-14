@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Get the command and optional name from arguments
+COMMAND=$1
+NAME=$2
+
+# Base knex command with required options
+BASE_CMD="npx ts-node ./node_modules/.bin/knex --knexfile src/config/knexfile.ts"
+
+case $COMMAND in
+  "latest"|"up")
+    $BASE_CMD migrate:latest
+    ;;
+  "rollback"|"down")
+    $BASE_CMD migrate:rollback
+    ;;
+  "make")
+    if [ -z "$NAME" ]; then
+      echo "Error: Migration name required"
+      echo "Usage: ./migrate make <migration_name>"
+      exit 1
+    fi
+    $BASE_CMD migrate:make $NAME --migrations-directory migrations
+    ;;
+  "seed")
+    $BASE_CMD seed:run
+    ;;
+  *)
+    echo "Usage: ./migrate [command]"
+    echo "Commands:"
+    echo "  latest         Run all pending migrations"
+    echo "  rollback       Rollback the last migration"
+    echo "  make <name>    Create a new migration file"
+    echo "  seed           Run seed files"
+    exit 1
+    ;;
+esac

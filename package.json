@@ -5,9 +5,10 @@
 	"scripts": {
 		"start": "bun run index.ts",
 		"dev": "bun --watch index.ts",
-		"migrate": "bunx knex migrate:latest",
-		"rollback": "bunx knex migrate:rollback",
-		"seed": "bunx knex seed:run",
+		"migrate": "./migrate",
+		"db:up": "./migrate latest",
+		"db:down": "./migrate rollback",
+		"db:new": "./migrate make",
 		"test": "NODE_ENV=test jest --detectOpenHandles",
 		"test:watch": "NODE_ENV=test jest --watch",
 		"test:coverage": "NODE_ENV=test jest --coverage"
