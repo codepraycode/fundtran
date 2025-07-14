@@ -3,8 +3,10 @@
 ![Node.js](https://img.shields.io/badge/Node.js-18-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![MySQL](https://img.shields.io/badge/MySQL-8-orange)
+![Knex](https://img.shields.io/badge/Knex.js-2.5+-blue?logo=knex&style=flat-square)
+[![Postman](https://img.shields.io/badge/Postman-API_Docs-FF6C37?logo=postman&logoColor=white)](https://documenter.getpostman.com/view/16739918/2sB34hFzhL)
 
-A secure backend for processing financial transactions with bank integrations.
+A secure backend for processing financial transactions with Raven Atlas integrations.
 
 ## Features
 
@@ -17,7 +19,7 @@ A secure backend for processing financial transactions with bank integrations.
 ## Tech Stack
 
 - **Backend**: Node.js + Express
-- **Database**: MySQL (Dockerized) + Knex
+- **Database**: MySQL (Dockerized) + Knex (ORM)
 - **API Docs**: Postman
 - **Validation**: Joi
 
@@ -58,3 +60,8 @@ To run server:
 ```bash
 bun dev
 ```
+
+## API Documentation
+
+Full API documentation with interactive examples:  
+📚 [View Postman Documentation](https://documenter.getpostman.com/view/16739918/2sB34hFzhL)
