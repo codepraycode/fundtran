@@ -22,8 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoute);
-// app.use('/api/transfers', transferRoutes);
-// app.use('/api/transactions', transactionRoutes);
+app.use('/api/transfers', transferRoutes);
+app.use('/api/transactions', transactionRoutes);
 
 // Error handling middleware
 app.use(errorHandler);
