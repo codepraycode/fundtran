@@ -3,12 +3,12 @@ import express, { type Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import {errorHandler} from './src/middlewares/error.middleware';
+import {errorHandler} from './middlewares/error.middleware';
 
-import authRoutes from './src/routes/auth.routes';
-import accountRoute from './src/routes/account.routes';
-import transferRoutes from './src/routes/transfer.routes';
-import transactionRoutes from './src/routes/transaction.routes';
+import authRoutes from './routes/auth.routes';
+import accountRoute from './routes/account.routes';
+import transferRoutes from './routes/transfer.routes';
+import transactionRoutes from './routes/transaction.routes';
 
 const app: Application = express();
 
