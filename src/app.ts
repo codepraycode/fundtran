@@ -1,14 +1,14 @@
-
 import express, { type Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import {errorHandler} from './middlewares/error.middleware';
+import { errorHandler } from './middlewares/error.middleware';
 
 import authRoutes from './routes/auth.routes';
 import accountRoute from './routes/account.routes';
 import transferRoutes from './routes/transfer.routes';
 import transactionRoutes from './routes/transaction.routes';
+import healthRoutes from './routes/health.routes';
 
 const app: Application = express();
 
@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoute);
 app.use('/api/transfers', transferRoutes);

@@ -1,11 +1,10 @@
 {
 	"name": "fundtran",
-	"module": "index.ts",
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"start": "bun run server.ts",
-		"dev": "bun --watch server.ts",
+		"start": "bun run index.ts",
+		"dev": "bun --watch index.ts",
 		"migrate": "bunx knex migrate:latest",
 		"rollback": "bunx knex migrate:rollback",
 		"seed": "bunx knex seed:run",
