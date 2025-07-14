@@ -12,36 +12,36 @@ const validationLogger = createLogger('validation');
  * @param part Which part of the request to validate ('body', 'query', or 'params')
  */
 export const validate = (schema: AnySchema, part: 'body' | 'query' | 'params' = 'body') => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { error, value } = schema.validate(req[part], {
-        abortEarly: false, // Return all errors not just the first one
-        stripUnknown: true, // Remove unknown properties
-        allowUnknown: true // Allow unknown properties that aren't in schema
-      });
+	return (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { error, value } = schema.validate(req[part], {
+				abortEarly: false, // Return all errors not just the first one
+				stripUnknown: true, // Remove unknown properties
+				allowUnknown: true, // Allow unknown properties that aren't in schema
+			});
 
-      if (error) {
-        const errors = error.details.map(detail => ({
-          field: detail.path.join('.'),
-          message: detail.message.replace(/['"]/g, '') // Remove quotes from error messages
-        }));
+			if (error) {
+				const errors = error.details.map((detail) => ({
+					field: detail.path.join('.'),
+					message: detail.message.replace(/['"]/g, ''), // Remove quotes from error messages
+				}));
 
-        validationLogger.warn('Validation failed', {
-          path: req.path,
-          errors,
-          [part]: req[part]
-        });
+				validationLogger.warn('Validation failed', {
+					path: req.path,
+					errors,
+					[part]: req[part],
+				});
 
-        throw new ApiError(422, 'Validation failed', errors);
-      }
+				throw new ApiError(422, 'Validation failed', errors);
+			}
 
-      // Replace the request part with the validated value
-      req[part] = value;
-      next();
-    } catch (error) {
-      next(error);
-    }
-  };
+			// Replace the request part with the validated value
+			req[part] = value;
+			next();
+		} catch (error) {
+			next(error);
+		}
+	};
 };
 
 /**

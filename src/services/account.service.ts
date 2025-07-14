@@ -1,6 +1,5 @@
 import db from '../config/database';
-import type { IAccount, IAccountCreate, IAccountUpdate } from '../interfaces/account.interface';
-import { generateAccountNumber } from '../utils/helpers';
+import type { IAccount, IAccountUpdate } from '../interfaces/account.interface';
 import { createLogger, logger } from '../utils/logger';
 import { ApiError } from '../utils/apiError';
 import RavenAtlasService from '../lib/ravenAtlas/ravenAtlas.service';

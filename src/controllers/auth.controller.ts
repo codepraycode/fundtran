@@ -111,7 +111,7 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
-	// Implementation...
+	// TODO
 };
 
 export const resetPassword = async (

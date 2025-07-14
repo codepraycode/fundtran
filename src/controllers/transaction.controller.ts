@@ -13,7 +13,7 @@ export const listTransactions = async (
 	next: NextFunction,
 ) => {
 	try {
-		const userId = req.user!.id;
+		// const userId = req.user!.id;
 		const filters = req.query;
 
 		const { status, message, data: transactions } = await RavenAtlasService.getTransactions();
