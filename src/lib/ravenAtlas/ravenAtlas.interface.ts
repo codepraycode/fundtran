@@ -1,13 +1,16 @@
+type RavenAmount = number | `${number}`;
+type RavenAccountNumber = string;
+
 export interface CreateRavenAccount {
 	first_name: string;
 	last_name: string;
 	phone: string;
-	amount: number | `${number}`;
+	amount: RavenAmount;
 	email: string | `${string}@${string}.${string}`;
 }
 
 export interface RavenAccount {
-	account_number: string | `${number}`;
+	account_number: RavenAccountNumber;
 	account_name: string;
 	bank: string;
 	customer: Omit<CreateRavenAccount, 'amount'>;
@@ -27,18 +30,38 @@ export type RavenResponse<T> =
 			data: T;
 	  };
 
-interface BankTransferPayload {
-	amount: number;
-	recipient_account_number: string;
-	recipient_bank_code: string;
+export interface RavenTransferDto {
+	amount: RavenAmount;
+	bank: string;
+	bank_code: string;
+	account_number: RavenAccountNumber;
+	account_name: string;
+	narration: string;
 	reference: string;
-	narration?: string;
 	currency?: string;
 }
 
-interface BankTransferResponse {
-	id: string;
-	status: 'pending' | 'processing' | 'success' | 'failed';
-	reference: string;
-	fee: number;
+interface RavenTransfer {
+	id: number;
+	trx_ref: string;
+	amount: RavenAmount;
+	email: string;
+	fee?: RavenAmount;
+	status: string;
+	bank: string;
+	account_number: RavenAccountNumber;
+	account_name: string;
+	narration: string;
+	merchant_ref: string;
+}
+
+export interface RavenTransferStatus extends RavenTransfer {
+	account_bank: string;
+	currency: string;
+	session_id: string;
+}
+
+export interface RavenTransferPayload extends RavenTransfer {
+	bank_code: string;
+	created_at: string;
 }

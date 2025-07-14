@@ -1,38 +1,26 @@
 import { logger } from '../../utils/logger';
 import { getRavenAtlasClient } from './ravenAtlas.client';
-import type { CreateRavenAccount, RavenAccount, RavenResponse } from './ravenAtlas.interface';
-
-interface BankTransferPayload {
-	amount: number;
-	recipient_account_number: string;
-	recipient_bank_code: string;
-	reference: string;
-	narration?: string;
-	currency?: string;
-}
-
-interface BankTransferResponse {
-	id: string;
-	status: 'pending' | 'processing' | 'success' | 'failed';
-	reference: string;
-	fee: number;
-}
+import type {
+	CreateRavenAccount,
+	RavenAccount,
+	RavenResponse,
+	RavenTransferDto,
+	RavenTransferPayload,
+	RavenTransferStatus,
+} from './ravenAtlas.interface';
 
 export default class RavenAtlasService {
-	public static async initiateBankTransfer(
-		payload: BankTransferPayload,
-	): Promise<BankTransferResponse> {
+	// Transfer
+	public static async makeBankTransfer(
+		payload: RavenTransferDto,
+	): Promise<RavenResponse<RavenTransferPayload>> {
+		const endpoint = '/transfers/create';
 		try {
 			const client = getRavenAtlasClient();
-			const response = await client.post<BankTransferResponse>('/transfers/bank', {
-				...payload,
-				currency: payload.currency || 'NGN',
-			});
-
-			logger.info('Bank transfer initiated', {
-				reference: response.reference,
-				amount: payload.amount,
-			});
+			const response = await client.post<RavenResponse<RavenTransferPayload>>(
+				endpoint,
+				payload,
+			);
 
 			return response;
 		} catch (error) {
@@ -41,6 +29,16 @@ export default class RavenAtlasService {
 		}
 	}
 
+	public static async getTransferStatus(
+		reference: string,
+	): Promise<RavenResponse<RavenTransferStatus>> {
+		const endpoint = `/get-transfer?trx_ref=${reference}`;
+		const client = getRavenAtlasClient();
+		return client.get<RavenResponse<RavenTransferStatus>>(endpoint);
+	}
+
+
+	// Account
 	public static async createAccount(
 		details: CreateRavenAccount,
 	): Promise<RavenResponse<RavenAccount>> {
@@ -50,25 +48,10 @@ export default class RavenAtlasService {
 	}
 
 	public static async getAccount(
-		accountNumber: RavenAccount["account_number"],
+		accountNumber: RavenAccount['account_number'],
 	): Promise<RavenResponse<RavenAccount[]>> {
 		const client = getRavenAtlasClient();
 		const endpoint = `/collection-account-number?account_number=${accountNumber}`;
 		return client.get<RavenResponse<RavenAccount[]>>(endpoint);
-	}
-
-	public static async getTransferStatus(reference: string): Promise<BankTransferResponse> {
-		const client = getRavenAtlasClient();
-		return client.get<BankTransferResponse>(`/transfers/${reference}/status`);
-	}
-
-	public static async getBanks(): Promise<
-		Array<{
-			code: string;
-			name: string;
-		}>
-	> {
-		const client = getRavenAtlasClient();
-		return client.get('/banks');
 	}
 }
