@@ -9,6 +9,7 @@ import accountRoute from './routes/account.routes';
 import transferRoutes from './routes/transfer.routes';
 import transactionRoutes from './routes/transaction.routes';
 import healthRoutes from './routes/health.routes';
+import webhookRoutes from './routes/webhook.routes';
 import { initRavenAtlasClient } from './lib/ravenAtlas/ravenAtlas.client';
 
 const app: Application = express();
@@ -33,6 +34,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoute);
 app.use('/api/transfers', transferRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/webhooks', webhookRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

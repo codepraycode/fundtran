@@ -1,6 +1,5 @@
-import type { Request, Response, NextFunction } from 'express';
+import type { Response, NextFunction } from 'express';
 import * as accountService from '../services/account.service';
-// import { ApiError } from '../utils/apiError';
 import { createLogger } from '../utils/logger';
 import type { AuthenticatedRequest } from '../types/request-types';
 
@@ -25,24 +24,6 @@ export const generateAccount = async (
 		});
 	} catch (error) {
 		accountLogger.error('Account generation failed', error as Error, { userId: req.user?.id });
-		next(error);
-	}
-};
-
-export const handleWebhook = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const payload = req.body;
-
-		await accountService.processWebhook(payload);
-
-		accountLogger.info('Webhook processed successfully', {
-			reference: payload.data.reference,
-			status: payload.data.status,
-		});
-
-		res.status(200).json({ success: true });
-	} catch (error) {
-		accountLogger.error('Webhook processing failed', error as Error, { body: req.body });
 		next(error);
 	}
 };

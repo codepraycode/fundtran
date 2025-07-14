@@ -10,9 +10,6 @@ const router = Router();
 // router.post('/', authenticate, validate(generateAccountSchema), accountController.generateAccount);
 router.post('/', authenticate, accountController.generateAccount);
 
-// Webhook for bank transfer notifications (public)
-router.post('/webhook', validate(webhookSchema), accountController.handleWebhook);
-
 // Get account details (protected)
 router.get('/:accountNumber', authenticate, accountController.getAccount);
 
