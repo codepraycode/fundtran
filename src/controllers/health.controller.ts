@@ -1,17 +1,18 @@
 import type { Request, Response } from 'express';
 import db from '../config/database';
+import { checkDatabase, getSystemStatus } from '../utils/healthCheck';
 
 export const healthCheck = async (req: Request, res: Response) => {
 	try {
 		// Test database connection
-		await db.raw('SELECT 1');
+		const db_status = await checkDatabase();
+		const sys_status = await getSystemStatus();
 
 		res.status(200).json({
 			status: 'healthy',
-			database: 'connected',
+			database: db_status,
+			system: sys_status,
 			timestamp: new Date().toISOString(),
-			uptime: process.uptime(),
-			memoryUsage: process.memoryUsage(),
 		});
 	} catch (error) {
 		res.status(500).json({
