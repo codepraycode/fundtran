@@ -19,6 +19,7 @@
 		"@types/helmet": "^4.0.0",
 		"@types/joi": "^17.2.3",
 		"@types/morgan": "^1.9.9",
+		"axios": "^1.10.0",
 		"bcrypt": "^6.0.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.1",

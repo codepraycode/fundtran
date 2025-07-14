@@ -25,3 +25,5 @@ export interface IUserLogin {
     email: string;
     password: string;
 }
+
+export type Authenticateduser = Pick<IUser, "id" | "email" | "first_name" | "last_name" | "phone">

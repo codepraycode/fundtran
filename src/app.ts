@@ -9,8 +9,16 @@ import accountRoute from './routes/account.routes';
 import transferRoutes from './routes/transfer.routes';
 import transactionRoutes from './routes/transaction.routes';
 import healthRoutes from './routes/health.routes';
+import { initRavenAtlasClient } from './lib/ravenAtlas/ravenAtlas.client';
 
 const app: Application = express();
+
+initRavenAtlasClient({
+	apiKey: process.env.RAVEN_ATLAS_API_KEY!,
+	baseURL: process.env.RAVEN_ATLAS_BASE_URL,
+	timeout: 15000,
+	maxRetries: 3,
+});
 
 // Middlewares
 app.use(cors());
